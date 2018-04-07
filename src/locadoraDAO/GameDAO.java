@@ -28,7 +28,6 @@ public class GameDAO {
 
         int a = idGame.getIdGenero();
 
-        // String b = null;
         Game game = new Game();
 
         try {
@@ -189,7 +188,7 @@ public class GameDAO {
             prepararPara.setInt(3, novoGame.getQtdeJogador());
             prepararPara.setInt(4, novoGame.getIdGenero());
             prepararPara.setString(5, novoGame.getSituacao());
-       
+
             prepararPara.executeUpdate();
 
             JOptionPane.showMessageDialog(null, "Game " + novoGame.getTitulo() + " criado com sucesso");

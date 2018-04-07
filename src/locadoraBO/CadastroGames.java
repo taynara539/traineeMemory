@@ -60,14 +60,13 @@ public class CadastroGames extends javax.swing.JFrame {
         genero = new javax.swing.JTextField();
         listaGeneros = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
-        situacao = new javax.swing.JTextField();
+        sit = new javax.swing.JComboBox<>();
         botaoSair = new javax.swing.JButton();
         botaoSalvar = new javax.swing.JButton();
         botaoLimpar = new javax.swing.JButton();
         botaoAlterar = new javax.swing.JButton();
         botaoIncluir = new javax.swing.JButton();
         botaoExcluir = new javax.swing.JButton();
-        sit = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -152,9 +151,10 @@ public class CadastroGames extends javax.swing.JFrame {
 
         jLabel9.setText("Situação:");
 
-        situacao.addActionListener(new java.awt.event.ActionListener() {
+        sit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DISPONÍVEL", "LOCADO" }));
+        sit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                situacaoActionPerformed(evt);
+                sitActionPerformed(evt);
             }
         });
 
@@ -184,10 +184,10 @@ public class CadastroGames extends javax.swing.JFrame {
                         .addComponent(genero, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(listaGeneros, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(situacao, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(sit, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         SinopseLayout.setVerticalGroup(
@@ -207,7 +207,7 @@ public class CadastroGames extends javax.swing.JFrame {
                     .addComponent(genero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(listaGeneros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
-                    .addComponent(situacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addComponent(sinopse, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -259,13 +259,6 @@ public class CadastroGames extends javax.swing.JFrame {
             }
         });
 
-        sit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DISPONÍVEL", "LOCADO" }));
-        sit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sitActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -276,11 +269,9 @@ public class CadastroGames extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(Sinopse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(270, Short.MAX_VALUE)
+                        .addContainerGap(375, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(sit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(botaoSair, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(botaoIncluir)
@@ -318,8 +309,7 @@ public class CadastroGames extends javax.swing.JFrame {
                     .addComponent(botaoSair)
                     .addComponent(botaoSalvar)
                     .addComponent(botaoExcluir)
-                    .addComponent(botaoIncluir)
-                    .addComponent(sit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(botaoIncluir))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -407,8 +397,8 @@ public class CadastroGames extends javax.swing.JFrame {
             idGames.setText(Integer.toString(med.getIdGame()));
             titulo.setText(med.getTitulo());
             qtdeJogadores.setText(Integer.toString(med.getQtdeJogador()));
-            situacao.setText(med.getSituacao());
             genero.setText(Integer.toString(med.getIdGenero()));
+            sit.setSelectedItem(med.getSituacao());
 
             listaGeneros.setSelectedItem(g);
 
@@ -425,7 +415,6 @@ public class CadastroGames extends javax.swing.JFrame {
         qtdeJogadores.setEditable(true);
         genero.setEditable(true);
         titulo.setEditable(true);
-        situacao.setEditable(true);
 
     }
 
@@ -436,8 +425,8 @@ public class CadastroGames extends javax.swing.JFrame {
         qtdeJogadores.setText("");
         genero.setText("");
         titulo.setText("");
-        situacao.setText("");
         listaGeneros.setSelectedIndex(0);
+        sit.setSelectedIndex(0);
 
     }
 
@@ -461,9 +450,6 @@ public class CadastroGames extends javax.swing.JFrame {
         DefaultTableModel modelo = (DefaultTableModel) Games.getModel();
         modelo.setNumRows(0);
         Games.setRowSorter(new TableRowSorter(modelo));
-
-        GameDAO pac = new GameDAO() {
-        };
 
         for (Game m : GameDAO.getAll()) {
             modelo.addRow(new Object[]{
@@ -509,13 +495,10 @@ public class CadastroGames extends javax.swing.JFrame {
             gamm.setQtdeJogador(Integer.parseInt(qtdeJogadores.getText()));
             gamm.setSinopse(sinopse.getText());
             gamm.setTitulo(titulo.getText());
-            //gamm.setSituacao(situacao.getText());
-            //gamm.setSituacao("DISPONÍVEL");
             gamm.setSituacao(sit.getSelectedItem().toString());
             GameDAO.incluirGame(gamm);
 
             lerGame();
-            selecionar();
 
         } catch (Exception e) {
 
@@ -565,7 +548,7 @@ public class CadastroGames extends javax.swing.JFrame {
             game.setIdGenero(g);
             game.setQtdeJogador(Integer.parseInt(qtdeJogadores.getText()));
             game.setTitulo(titulo.getText());
-            game.setSituacao(situacao.getText());
+            game.setSituacao((String) sit.getSelectedItem());
 
             atualizarGame(game);
 
@@ -648,11 +631,6 @@ public class CadastroGames extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_botaoExcluirActionPerformed
-
-    private void situacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_situacaoActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_situacaoActionPerformed
 
     private void sitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sitActionPerformed
         // TODO add your handling code here:
@@ -975,7 +953,6 @@ public class CadastroGames extends javax.swing.JFrame {
     private javax.swing.JTextField qtdeJogadores;
     private javax.swing.JTextField sinopse;
     private javax.swing.JComboBox<String> sit;
-    private javax.swing.JTextField situacao;
     private javax.swing.JTextField titulo;
     // End of variables declaration//GEN-END:variables
 }
