@@ -15,33 +15,6 @@ public class GeneroDAO {
      *
      * @author taynara
      */
-    /*public static void incluir(Genero m) throws Exception {
-
-        ConexaoComBanco con = new ConexaoComBanco();
-        PreparedStatement prepararPara = null;
-
-        try {
-
-            String consulta = "INSERT INTO genero (descricao)"
-                    + "VALUES (?)";
-
-            prepararPara = con.conectando().prepareStatement(consulta);
-            prepararPara.setString(1, m.getDescricao());
-            prepararPara.execute();
-
-            JOptionPane.showMessageDialog(null, "Gênero criado com sucesso!");
-
-        } catch (Exception e) {
-
-            JOptionPane.showMessageDialog(null, "Erro ao criar gênero!\n" + e);
-        } finally {
-
-            prepararPara.close();
-            con.fecharConexaoComBanco();
-
-        }
-
-    }*/
     public static void incluir(String m) throws Exception {
 
         ConexaoComBanco con = new ConexaoComBanco();
@@ -224,7 +197,7 @@ public class GeneroDAO {
             while (rs.next()) {
 
                 atend.setDescricao(rs.getString("descricao"));
-                atend.setIdGenero(rs.getInt("idGeneros"));
+                atend.setIdGenero(rs.getInt("id_genero"));
 
             }
 
@@ -265,9 +238,8 @@ public class GeneroDAO {
         }
 
     }
-    
-    
-        public static void excluirGenero(int id) throws SQLException, Exception {
+
+    public static void excluirGenero(int id) throws SQLException, Exception {
 
         ConexaoComBanco con = new ConexaoComBanco();
         PreparedStatement verCod = null;
@@ -281,7 +253,7 @@ public class GeneroDAO {
 
             verCod.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Gênero " + id + " excluído!");
+            JOptionPane.showMessageDialog(null, "Gênero excluído!");
 
         } catch (SQLException e) {
 
@@ -293,8 +265,7 @@ public class GeneroDAO {
 
         }
     }
-        
-     
+
     public static String buscaPorDescricao(String descricao) throws SQLException {
 
         String resultado = null;
@@ -312,46 +283,12 @@ public class GeneroDAO {
         while (resultados.next()) {
             Genero gen = new Genero();
 
-             gen.setIdGenero(resultados.getInt("id_genero"));
-             gen.setDescricao(resultados.getString("descricao"));
+            gen.setIdGenero(resultados.getInt("id_genero"));
+            gen.setDescricao(resultados.getString("descricao"));
             resultado = resultados.getString("descricao");
 
         }
 
         return resultado;
     }
-
-    /*public static List<Genero> listarDescricaoGenero(String genero) {
-
-        ConexaoComBanco con = new ConexaoComBanco();
-
-        String consulta = ("select * from genero where id_genero like ?");
-
-        List<Genero> list = new ArrayList<Genero>();
-
-        try {
-            PreparedStatement prepararPara;
-            prepararPara = con.conectando().prepareStatement(consulta);
-            ResultSet resultados = null;
-            prepararPara.setString(1, '%' + genero + '%');
-
-            resultados = prepararPara.executeQuery();
-
-            while (resultados.next()) {
-                Genero gen = new Genero();
-
-                gen.setIdGenero(resultados.getInt("id_genero"));
-                gen.setDescricao(resultados.getString("descricao"));
-
-                list.add(gen);
-
-            }
-
-        } catch (Exception e) {
-            System.out.println("Erro ao listar a - " + e.getMessage());
-        }
-
-        return list;
-    }*/
-
-    }
+}

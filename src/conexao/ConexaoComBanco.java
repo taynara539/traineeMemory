@@ -6,8 +6,8 @@ import java.sql.SQLException;
 
 public class ConexaoComBanco {
 
-    private String STRING_CONEXAO = "jdbc:mysql://localhost:3306/locadora?user=root"; 
-    //private String STRING_CONEXAO = "jdbc:mysql://localhost:3306/locadora?useSSL=false";
+    //private String STRING_CONEXAO = "jdbc:mysql://localhost:3306/locadora?user=root"; 
+    private String STRING_CONEXAO = "jdbc:mysql://localhost:3306/locadora?useSSL=false";
     private String USUARIO_CONEXAO = "root";
     private String SENHA_CONEXAO = "123456";
 

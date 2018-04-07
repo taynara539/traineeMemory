@@ -1,6 +1,5 @@
 package locadoraBO;
 
-import java.sql.SQLException;
 import locadoraMODELO.Genero;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,17 +17,17 @@ public class CadastroGenero extends javax.swing.JFrame {
      */
     public CadastroGenero() throws Exception {
         initComponents();
-        DefaultTableModel modelo = (DefaultTableModel) genero.getModel();
-        genero.setRowSorter(new TableRowSorter(modelo));
+        DefaultTableModel modelo = (DefaultTableModel) genero1.getModel();
+        genero1.setRowSorter(new TableRowSorter(modelo));
         listarEspecialidade();
 
     }
 
     public void lerGenero() throws Exception {
 
-        DefaultTableModel modelo = (DefaultTableModel) genero.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) genero1.getModel();
         modelo.setNumRows(0);
-        genero.setRowSorter(new TableRowSorter(modelo));
+        genero1.setRowSorter(new TableRowSorter(modelo));
 
         GeneroDAO generos = new GeneroDAO() {
         };
@@ -38,6 +37,33 @@ public class CadastroGenero extends javax.swing.JFrame {
                 genero.getIdGenero(),
                 genero.getDescricao()});
 
+        }
+
+    }
+
+    public void excluir() {
+
+        int pegarCod, j, r, x = 0;
+        String s = null;
+        String z, p, xx;
+        int a = 0;
+
+        pegarCod = genero1.getSelectedRow();
+        s = Integer.toString(pegarCod);
+        j = (int) genero1.getValueAt(pegarCod, 0);
+
+        try {
+
+            r = guardarValorIDparaBUscarGame(j);
+            xx = Integer.toString(r);
+            GeneroDAO.excluirGenero(r);
+
+            nomeGenero.setText("");
+            idGenero.setText("");
+            lerGenero();
+
+        } catch (Exception ex) {
+            Logger.getLogger(CadastroGenero.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -67,6 +93,35 @@ public class CadastroGenero extends javax.swing.JFrame {
         }
     }
 
+    public void selecionar() {
+
+        int pegarCod, j, r, x = 0;
+        String s = null;
+        String z, p, xx;
+        int a = 0;
+        Genero med = null;
+
+        pegarCod = genero1.getSelectedRow();
+
+        s = Integer.toString(pegarCod);
+
+        j = (int) genero1.getValueAt(pegarCod, 0);
+
+        try {
+
+            r = guardarValorIDparaBUscarGame(j);
+            xx = Integer.toString(r);
+            med = GeneroDAO.retTabGeneroPeloId(xx);
+
+            nomeGenero.setText(med.getDescricao());
+            idGenero.setText(Integer.toString(med.getIdGenero()));
+
+        } catch (Exception ex) {
+            Logger.getLogger(CadastroGenero.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     public void limpaCampos() {
         nomeGenero.setText("");
         idGenero.setText("");
@@ -92,7 +147,7 @@ public class CadastroGenero extends javax.swing.JFrame {
 
     }
 
-    private int guardarValorIDparaBUscarMedico(int id) throws Exception {
+    private int guardarValorIDparaBUscarGame(int id) throws Exception {
         int idd = 0;
         idd = id;
 
@@ -127,7 +182,7 @@ public class CadastroGenero extends javax.swing.JFrame {
         botaoLimpar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        genero = new javax.swing.JTable();
+        genero1 = new javax.swing.JTable();
         botaoSalvar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         nomeGenero = new javax.swing.JTextField();
@@ -171,7 +226,7 @@ public class CadastroGenero extends javax.swing.JFrame {
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Gêneros");
 
-        genero.setModel(new javax.swing.table.DefaultTableModel(
+        genero1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -187,15 +242,15 @@ public class CadastroGenero extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        genero.setColumnSelectionAllowed(true);
-        genero.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        genero.addMouseListener(new java.awt.event.MouseAdapter() {
+        genero1.setColumnSelectionAllowed(true);
+        genero1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        genero1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                generoMouseClicked(evt);
+                genero1MouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(genero);
-        genero.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        jScrollPane1.setViewportView(genero1);
+        genero1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         botaoSalvar.setText("Salvar");
         botaoSalvar.setEnabled(false);
@@ -318,7 +373,9 @@ public class CadastroGenero extends javax.swing.JFrame {
         String desc = nomeGenero.getText();
 
         if (!"".equals(desc)) {
+
             incluir();
+
         } else {
 
             JOptionPane.showMessageDialog(null, "Gentileza informar um nome válido!");
@@ -334,44 +391,20 @@ public class CadastroGenero extends javax.swing.JFrame {
     private void botaoSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSelecionarActionPerformed
         // TODO add your handling code here:
 
+        botaoNovo.setEnabled(true);
         botaoLimpar.setEnabled(true);
         botaoSalvar.setEnabled(true);
-        botaoNovo.setEnabled(false);
         botaoAlterar.setEnabled(true);
+        botaoExcluir.setEnabled(true);
 
         try {
             tornarNaoEditavel();
+            selecionar();
 
         } catch (Exception ex) {
 
             Logger.getLogger(CadastroGenero.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        int pegarCod, j, r, x = 0;
-        String s = null;
-        String z, p, xx;
-        int a = 0;
-        Genero med = null;
-
-        pegarCod = genero.getSelectedRow();
-
-        s = Integer.toString(pegarCod);
-
-        j = (int) genero.getValueAt(pegarCod, 0);
-
-        try {
-
-            r = guardarValorIDparaBUscarMedico(j);
-            xx = Integer.toString(r);
-            med = GeneroDAO.retTabGeneroPeloId(xx);
-
-            nomeGenero.setText(med.getDescricao());
-            idGenero.setText(Integer.toString(med.getIdGenero()));
-
-        } catch (Exception ex) {
-            Logger.getLogger(CadastroGenero.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
 
     }//GEN-LAST:event_botaoSelecionarActionPerformed
 
@@ -401,9 +434,9 @@ public class CadastroGenero extends javax.swing.JFrame {
         //idMedico.setText(receberMedicoSelecionado.toString());
     }//GEN-LAST:event_idGeneroActionPerformed
 
-    private void generoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_generoMouseClicked
+    private void genero1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_genero1MouseClicked
 
-    }//GEN-LAST:event_generoMouseClicked
+    }//GEN-LAST:event_genero1MouseClicked
 
     private void botaoLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLimparActionPerformed
         // TODO add your handling code here:
@@ -429,7 +462,7 @@ public class CadastroGenero extends javax.swing.JFrame {
     private void botaoExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirActionPerformed
         // TODO add your handling code here:
 
-
+        excluir();
     }//GEN-LAST:event_botaoExcluirActionPerformed
 
     /**
@@ -507,7 +540,7 @@ public class CadastroGenero extends javax.swing.JFrame {
     private javax.swing.JButton botaoSair;
     private javax.swing.JButton botaoSalvar;
     private javax.swing.JButton botaoSelecionar;
-    private javax.swing.JTable genero;
+    private javax.swing.JTable genero1;
     private javax.swing.JTextField idGenero;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
