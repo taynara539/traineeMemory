@@ -95,6 +95,8 @@ public class CadastroGenero extends javax.swing.JFrame {
 
     public void selecionar() {
 
+        botaoNovo.setEnabled(false);
+
         int pegarCod, j, r, x = 0;
         String s = null;
         String z, p, xx;
@@ -108,6 +110,11 @@ public class CadastroGenero extends javax.swing.JFrame {
         j = (int) genero1.getValueAt(pegarCod, 0);
 
         try {
+
+            botaoLimpar.setEnabled(true);
+            botaoSalvar.setEnabled(true);
+            botaoAlterar.setEnabled(true);
+            botaoExcluir.setEnabled(true);
 
             r = guardarValorIDparaBUscarGame(j);
             xx = Integer.toString(r);
@@ -391,13 +398,8 @@ public class CadastroGenero extends javax.swing.JFrame {
     private void botaoSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSelecionarActionPerformed
         // TODO add your handling code here:
 
-        botaoNovo.setEnabled(true);
-        botaoLimpar.setEnabled(true);
-        botaoSalvar.setEnabled(true);
-        botaoAlterar.setEnabled(true);
-        botaoExcluir.setEnabled(true);
-
         try {
+
             tornarNaoEditavel();
             selecionar();
 

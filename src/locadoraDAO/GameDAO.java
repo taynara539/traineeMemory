@@ -28,8 +28,7 @@ public class GameDAO {
 
         int a = idGame.getIdGenero();
 
-        String b = null;
-
+        // String b = null;
         Game game = new Game();
 
         try {
@@ -105,7 +104,7 @@ public class GameDAO {
 
         String atualizar = ("UPDATE game "
                 + "SET titulo = ?, sinopse = ?,"
-                + "qtde_jogador = ?, id_genero = ?, situacao = ?, WHERE id_game = ?");
+                + "qtde_jogador = ?, id_genero = ?, situacao = ? WHERE id_game = ?");
 
         try {
 
@@ -190,11 +189,10 @@ public class GameDAO {
             prepararPara.setInt(3, novoGame.getQtdeJogador());
             prepararPara.setInt(4, novoGame.getIdGenero());
             prepararPara.setString(5, novoGame.getSituacao());
-            //prepararPara.setInt(6, novoGame.setIdGame());
-
+       
             prepararPara.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Game " + novoGame.getTitulo() + " inserido com sucesso");
+            JOptionPane.showMessageDialog(null, "Game " + novoGame.getTitulo() + " criado com sucesso");
 
         } catch (HeadlessException | SQLException e) {
 
@@ -293,7 +291,7 @@ public class GameDAO {
 
             verCod.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Game " + id + " excluído!");
+            JOptionPane.showMessageDialog(null, "Game excluído!");
 
         } catch (SQLException e) {
 
@@ -305,5 +303,5 @@ public class GameDAO {
 
         }
     }
-    
+
 }
