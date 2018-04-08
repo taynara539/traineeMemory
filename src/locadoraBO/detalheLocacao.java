@@ -5,11 +5,19 @@
  */
 package locadoraBO;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import locadoraDAO.*;
 import locadoraMODELO.*;
+import locadoraMODELO.*;
+import java.util.List;
+import java.util.logging.Level;
+import locadoraDAO.*;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -24,6 +32,12 @@ public class detalheLocacao extends javax.swing.JFrame {
         initComponents();
 
         listarGamesDisponiveis();
+
+    }
+
+    public void atualizarSituacaoGame(int idGame) throws SQLException {
+
+        GameDAO.updateSituacaoGame(idGame);
 
     }
 
@@ -55,35 +69,24 @@ public class detalheLocacao extends javax.swing.JFrame {
         locacao.setIdGame(especia);
         locacao.setDtDevolucao(dtDevolucao.getText());
         locacao.setDtLocacao(dtLocacao.getText());
-        
+
         LocacaoDAO.incluir(locacao);
-        
+        atualizarSituacaoGame(especia);
         limpaCampos();
-        
-       
-        
-        
-        
 
     }
-    
-    public void limpaCampos(){
-    
-    idLocacao.setText("");
-    nomeCliente.setText("");
-    telefone.setText("");
-     valor.setText("");
-     dtDevolucao.setText("");
-    dtLocacao.setText("");
-    listaGames.setSelectedIndex(0);
-        
-        
-    
-    
+
+    public void limpaCampos() {
+
+        idLocacao.setText("");
+        nomeCliente.setText("");
+        telefone.setText("");
+        valor.setText("");
+        dtDevolucao.setText("");
+        dtLocacao.setText("");
+        listaGames.setSelectedIndex(0);
+
     }
-    
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -300,7 +303,16 @@ public class detalheLocacao extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
 
-        this.dispose();
+        try {
+            this.dispose();
+            CadastroLocacoes cadastroLocacoes;
+            cadastroLocacoes = new CadastroLocacoes();
+            cadastroLocacoes.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(detalheLocacao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -308,7 +320,12 @@ public class detalheLocacao extends javax.swing.JFrame {
             // TODO add your handling code here:
 
             incluir();
+
             this.dispose();
+
+            CadastroLocacoes cadastroLocacoes;
+            cadastroLocacoes = new CadastroLocacoes();
+            cadastroLocacoes.setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(detalheLocacao.class.getName()).log(Level.SEVERE, null, ex);
         }

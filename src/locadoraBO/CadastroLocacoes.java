@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.logging.Level;
 import locadoraDAO.*;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -32,11 +31,13 @@ public class CadastroLocacoes extends javax.swing.JFrame {
         lerAtendimento();
         gamesDisponiveis();
         listarGamess();
+        tornarNaoEditavel();
+        idLocacao.setEditable(false);
     }
 
     public void excluirLocacao(int idLocacao) throws Exception {
 
-      LocacaoDAO.excluirLocacao(idLocacao);
+        LocacaoDAO.excluirLocacao(idLocacao);
 
     }
 
@@ -57,22 +58,6 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
         }
 
-    }
-
-    public void fazerLocacao() throws Exception {
-
-        /*Locacoes loc = new Locacoes();
-    
-    loc.setIdLocacao(Integer.parseInt(idLocacao.getText()));
-    loc.setNomeCliente(nomeCliente.getText());
-    loc.setTelefone(telefone.getText());
-    loc.setValor(Float.valueOf(valor.getText()).longValue());
-    loc.setDtLocacao(dtLocacao.getText());
-    loc.setDtDevolucao(dtDevolucao.getText());*/
-        // loc.setIdGame(gamesLocacao.getSelectedRow());
-        //loc.setIdGame(gamesLocacao.getSelectedRows());
-        // System.out.println("GAMES SELEC" + gamesLocacao.getSelectedRows().equals());
-        //LocacaoDAO.incluir(loc);
     }
 
     public void exibirGamesPorLocacao(int g) throws Exception {
@@ -159,11 +144,13 @@ public class CadastroLocacoes extends javax.swing.JFrame {
         }
     }
 
-    private void tornarNaoEditavel() throws Exception {
+    private void tornarNaoEditavel() {
+        
+        
 
-        telefone.setEditable(false);
-        valor.setEditable(false);
+         valor.setEditable(false);
         nomeCliente.setEditable(false);
+        telefone.setEditable(false);
         dtLocacao.setEditable(false);
         dtDevolucao.setEditable(false);
 
@@ -197,14 +184,15 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
     }
 
-    private void tornarEditavel() throws Exception {
-
-        telefone.setEditable(true);
-
-        valor.setEditable(true);
+    private void tornarEditavel() {
+        
+         valor.setEditable(true);
         nomeCliente.setEditable(true);
+        telefone.setEditable(true);
         dtLocacao.setEditable(true);
         dtDevolucao.setEditable(true);
+
+        
 
     }
 
@@ -555,6 +543,8 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
     private void botaoIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoIncluirActionPerformed
         try {
+            
+          this.dispose();
             // TODO add your handling code here:
             //   fazerLocacao();
             detalheLocacao locar = new detalheLocacao();
