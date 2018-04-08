@@ -31,28 +31,8 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
         lerAtendimento();
         listarGamess();
-        //   exibirGamesPorLocacao();
-
     }
 
-    /*public void exibirGamesPorLocacao() throws Exception {
-
-        DefaultTableModel modelo = (DefaultTableModel) gamesLocacao.getModel();
-        modelo.setNumRows(0);
-        gamesLocacao.setRowSorter(new TableRowSorter(modelo));
-        
-      //g = 1;
-
-        for (Locacoes l : LocacaoDAO.getAllComGames()){
-            modelo.addRow(new Object[]{
-
-                l.getIdGame()
-              
-    
-            });
-        }
-
-    }*/
     public void lerGenero() throws Exception {
 
         DefaultTableModel modelo = (DefaultTableModel) gamesLocacao.getModel();
@@ -74,6 +54,8 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
     public void exibirGamesPorLocacao(int g) throws Exception {
 
+        idLocacao.setText(Integer.toString(g));
+
         DefaultTableModel modelo1 = (DefaultTableModel) gamesLocacao.getModel();
         modelo1.setNumRows(0);
         gamesLocacao.setRowSorter(new TableRowSorter(modelo1));
@@ -84,27 +66,30 @@ public class CadastroLocacoes extends javax.swing.JFrame {
                 t.getTitulo(),
                 t.getDescricao()});
         }
-        
-       //  listarLocs(g);
+
+        Locacoes s = new Locacoes();
+
+        s = (Locacoes) LocacaoDAO.getAllComGames(g).get(0);
+
+        telefone.setText(s.getTelefone());
+        dtDevolucao.setText(s.getDtDevolucao());
+        dtLocacao.setText(s.getDtLocacao());
+        nomeCliente.setText(s.getNomeCliente());
+        valor.setText(Float.toString(s.getValor()));
 
     }
 
-    public void lerDescricaoDoGenero() throws Exception {
+    public void campos() throws Exception {
 
-        /* DefaultTableModel modelo = (DefaultTableModel) Locacoes.getModel();
-        modelo.setNumRows(0);
+        Locacoes s = new Locacoes();
 
-        Locacoes.setRowSorter(new TableRowSorter(modelo));
+        s = (Locacoes) LocacaoDAO.getAll().get(0);
 
-        GeneroDAO med = new GeneroDAO() {
-        };
+        valor.setText(Float.toString(s.getValor()));
+        telefone.setText(s.getTelefone());
+        dtDevolucao.setText(s.getDtDevolucao());
+        dtLocacao.setText(s.getDtLocacao());
 
-        for (Genero m : med.getAll()) {
-            modelo.addRow(new Object[]{
-              //  m.getIdGenero(),
-                m.getDescricao()});
-
-        }*/
     }
 
     public void lerAtendimento() throws Exception {
@@ -161,16 +146,6 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
     }
 
-    /* private void listarGenero() throws Exception {
-
-        List<Genero> todosGeneros;
-        todosGeneros = GeneroDAO.getAll();
-        todosGeneros.forEach((s) -> {
-            //listaGeneros1.addItem(s.getDescricao());
-
-        });
-
-    }*/
     private void listarGamess() throws Exception {
 
         List<Game> todosGames;
@@ -180,27 +155,6 @@ public class CadastroLocacoes extends javax.swing.JFrame {
         });
 
     }
-
-   /* private void listarLocs(int id) throws Exception {
-
-        List<Locacoes> dadosLocacaoes;
-        dadosLocacaoes = LocacaoDAO.getAllComGames(id);
-        Locacoes e = new Locacoes();
-        
-        int z = id;
-      e.getIdLocacao();
-      //  e = dadosLocacaoes.get(id);
-        //idLocacao.setText(Integer.toString(id));
-        //idLocacao.setText(Integer.toString(z);
-
-        valor.setText((String) dadosLocacaoes.getClass().getSuperclass().cast(e));
-        //valor.setText(Integer.toString((int) e.getValor()));
-        telefone.setText(e.getTelefone());
-        dtDevolucao.setText(e.getDtDevolucao());
-        dtLocacao.setText(e.getDtLocacao());
-        nomeCliente.setText(e.getNomeCliente());
-
-    }*/
 
     private void tornarEditavel() throws Exception {
 
@@ -558,7 +512,7 @@ public class CadastroLocacoes extends javax.swing.JFrame {
     private void botaoIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoIncluirActionPerformed
         try {
             // TODO add your handling code here:
-            //incluirAtendimento();
+
             lerAtendimento();
 
         } catch (Exception ex) {
@@ -572,8 +526,6 @@ public class CadastroLocacoes extends javax.swing.JFrame {
         int pegarCod, j;
         String s = null;
         String xx;
-        //Locacoes loc;
-        /// Game med;
 
         pegarCod = Locacoes1.getSelectedRow();
 
@@ -584,31 +536,8 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
         try {
 
-            /* for (Locacoes m : LocacaoDAO.getAll()) {
-            modelo.addRow(new Object[]{
-                m.getIdLocacao(),
-                m.getNomeCliente(),
-                m.getTelefone(),
-                m.getValor(),
-                m.getDtLocacao(),
-                m.getDtDevolucao()
-
-            });
-
-        }*/
             exibirGamesPorLocacao(j);
-            idLocacao.setText(Integer.toString(j));
-           
-                  System.out.println("Pegou a locação de ID " + j);
 
-         //   exibirGamesPorLocacao(j);
-
-            /*idLocacao.setText(s);
-            valor.setText(s);
-            telefone.setText(s);
-            dtDevolucao.setText(s);
-            dtLocacao.setText(s);
-            nomeCliente.setText(s);*/
         } catch (Exception ex) {
             Logger.getLogger(CadastroLocacoes.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -649,13 +578,9 @@ public class CadastroLocacoes extends javax.swing.JFrame {
         pegarCod = gamesLocacao.getSelectedRow();
 
         try {
-            System.out.println("PEGAR COD = " + pegarCod);
 
             s = Integer.toString(pegarCod);
             j = (int) gamesLocacao.getValueAt(pegarCod, 0);
-
-            xx = Integer.toString(j);
-            //   loc = LocacaoDAO.buscarGamePorIdRecLocacao(xx);
 
             xx = Integer.toString(j);
             loc = LocacaoDAO.buscarLocacoesPorId(xx);
