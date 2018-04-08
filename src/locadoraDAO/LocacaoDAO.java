@@ -299,7 +299,7 @@ public class LocacaoDAO {
 
         try {
 
-            String consulta = ("delete from locacoes where id_locacoes = ?;");
+            String consulta = ("delete from locacoes where id_locacao = ?;");
 
             verCod = con.conectando().prepareStatement(consulta);
             verCod.setInt(1, id);

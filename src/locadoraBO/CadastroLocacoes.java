@@ -30,8 +30,14 @@ public class CadastroLocacoes extends javax.swing.JFrame {
         Locacoes1.setRowSorter(new TableRowSorter(modelo));
 
         lerAtendimento();
-       gamesDisponiveis();
+        gamesDisponiveis();
         listarGamess();
+    }
+
+    public void excluirLocacao(int idLocacao) throws Exception {
+
+      LocacaoDAO.excluirLocacao(idLocacao);
+
     }
 
     public void lerGenero() throws Exception {
@@ -52,10 +58,10 @@ public class CadastroLocacoes extends javax.swing.JFrame {
         }
 
     }
-    
-    public void fazerLocacao() throws Exception{
-    
-    /*Locacoes loc = new Locacoes();
+
+    public void fazerLocacao() throws Exception {
+
+        /*Locacoes loc = new Locacoes();
     
     loc.setIdLocacao(Integer.parseInt(idLocacao.getText()));
     loc.setNomeCliente(nomeCliente.getText());
@@ -63,18 +69,11 @@ public class CadastroLocacoes extends javax.swing.JFrame {
     loc.setValor(Float.valueOf(valor.getText()).longValue());
     loc.setDtLocacao(dtLocacao.getText());
     loc.setDtDevolucao(dtDevolucao.getText());*/
-   // loc.setIdGame(gamesLocacao.getSelectedRow());
-    //loc.setIdGame(gamesLocacao.getSelectedRows());
-    
-       // System.out.println("GAMES SELEC" + gamesLocacao.getSelectedRows().equals());
-    
-     //LocacaoDAO.incluir(loc);
-    
-    
-    
-    
+        // loc.setIdGame(gamesLocacao.getSelectedRow());
+        //loc.setIdGame(gamesLocacao.getSelectedRows());
+        // System.out.println("GAMES SELEC" + gamesLocacao.getSelectedRows().equals());
+        //LocacaoDAO.incluir(loc);
     }
-  
 
     public void exibirGamesPorLocacao(int g) throws Exception {
 
@@ -170,11 +169,9 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
     }
 
-    
-    public void gamesDisponiveis() throws Exception{
-    
-    
-    DefaultTableModel modelo = (DefaultTableModel) gamesLocacao.getModel();
+    public void gamesDisponiveis() throws Exception {
+
+        DefaultTableModel modelo = (DefaultTableModel) gamesLocacao.getModel();
         modelo.setNumRows(0);
         gamesLocacao.setRowSorter(new TableRowSorter(modelo));
 
@@ -187,8 +184,9 @@ public class CadastroLocacoes extends javax.swing.JFrame {
             });
 
         }
-    
+
     }
+
     private void listarGamess() throws Exception {
 
         List<Game> todosGames;
@@ -558,12 +556,11 @@ public class CadastroLocacoes extends javax.swing.JFrame {
     private void botaoIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoIncluirActionPerformed
         try {
             // TODO add your handling code here:
-         //   fazerLocacao();
-           detalheLocacao locar = new detalheLocacao();
-           locar.setVisible(true);
+            //   fazerLocacao();
+            detalheLocacao locar = new detalheLocacao();
+            locar.setVisible(true);
 
-           // lerAtendimento();
-
+            // lerAtendimento();
         } catch (Exception ex) {
             Logger.getLogger(CadastroLocacoes.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -618,31 +615,28 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
     private void botaoExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirActionPerformed
         // TODO add your handling code here:
-
-        int pegarCod, j;
-        String s = null;
-        String xx;
-        Locacoes loc;
-
-        pegarCod = gamesLocacao.getSelectedRow();
-
         try {
+            int pegarCod, j;
+            String s = null;
+            String xx;
+
+            pegarCod = Locacoes1.getSelectedRow();
 
             s = Integer.toString(pegarCod);
-            j = (int) gamesLocacao.getValueAt(pegarCod, 0);
+            j = (int) Locacoes1.getValueAt(pegarCod, 0);
 
             xx = Integer.toString(j);
-            loc = LocacaoDAO.buscarLocacoesPorId(xx);
 
-            LocacaoDAO.excluirLocacao(j);
-
-            lerAtendimento();
+            excluirLocacao(j);
             limparcampos();
+            lerAtendimento();
+            gamesDisponiveis();
+            listarGamess();
 
         } catch (Exception ex) {
-            JOptionPane.showInputDialog("\nLocação Excluida \n" + ex);
-            Logger.getLogger(GameDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CadastroLocacoes.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }//GEN-LAST:event_botaoExcluirActionPerformed
 
     private void Locacoes1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Locacoes1MouseClicked
