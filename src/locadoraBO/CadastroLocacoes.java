@@ -7,7 +7,6 @@ package locadoraBO;
 
 import locadoraMODELO.*;
 import java.util.List;
-import java.util.Locale;
 import java.util.logging.Level;
 import locadoraDAO.*;
 import java.util.logging.Logger;
@@ -27,14 +26,12 @@ public class CadastroLocacoes extends javax.swing.JFrame {
      */
     public CadastroLocacoes() throws Exception {
         initComponents();
-        /*DefaultTableModel modelo = (DefaultTableModel) gamesLocacao.getModel();
-        gamesLocacao.setRowSorter(new TableRowSorter(modelo));*/
         DefaultTableModel modelo = (DefaultTableModel) Locacoes1.getModel();
         Locacoes1.setRowSorter(new TableRowSorter(modelo));
 
         lerAtendimento();
         listarGamess();
-        // exibirGamesPorLocacao();
+        //   exibirGamesPorLocacao();
 
     }
 
@@ -77,19 +74,18 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
     public void exibirGamesPorLocacao(int g) throws Exception {
 
-        DefaultTableModel modelo = (DefaultTableModel) gamesLocacao.getModel();
-        modelo.setNumRows(0);
-        gamesLocacao.setRowSorter(new TableRowSorter(modelo));
+        DefaultTableModel modelo1 = (DefaultTableModel) gamesLocacao.getModel();
+        modelo1.setNumRows(0);
+        gamesLocacao.setRowSorter(new TableRowSorter(modelo1));
 
-        for (Locacoes l : LocacaoDAO.getAllComGames(g)) {
-            modelo.addRow(new Object[]{
-                l.getIdGame(),
-                l.getNomeCliente(),
-                l.getTelefone()
-
-            });
-            
+        for (Test t : testeDAO.gameDaLocacaoJoin(g)) {
+            modelo1.addRow(new Object[]{
+                t.getId_game(),
+                t.getTitulo(),
+                t.getDescricao()});
         }
+        
+       //  listarLocs(g);
 
     }
 
@@ -117,15 +113,11 @@ public class CadastroLocacoes extends javax.swing.JFrame {
         modelo.setNumRows(0);
         Locacoes1.setRowSorter(new TableRowSorter(modelo));
 
-        LocacaoDAO med = new LocacaoDAO() {
-        };
-
         for (Locacoes m : LocacaoDAO.getAll()) {
             modelo.addRow(new Object[]{
                 m.getIdLocacao(),
                 m.getNomeCliente(),
                 m.getTelefone(),
-                ///m.getValor(),
                 m.getDtLocacao(),
                 m.getDtDevolucao()
 
@@ -136,14 +128,13 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
     public void limparcampos() {
 
-        //genero1.setText("");
         valor.setText("");
         nomeCliente.setText("");
         idLocacao.setText("");
         telefone.setText("");
         dtLocacao.setText("");
         dtDevolucao.setText("");
-   
+
     }
 
     public void dadosConsultaAtendimento(String atendimento) {
@@ -170,7 +161,7 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
     }
 
-    private void listarGenero() throws Exception {
+    /* private void listarGenero() throws Exception {
 
         List<Genero> todosGeneros;
         todosGeneros = GeneroDAO.getAll();
@@ -179,17 +170,37 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
         });
 
-    }
-
+    }*/
     private void listarGamess() throws Exception {
 
         List<Game> todosGames;
         todosGames = GameDAO.getAll();
-      
+
         todosGames.forEach((s) -> {
-            });
+        });
 
     }
+
+   /* private void listarLocs(int id) throws Exception {
+
+        List<Locacoes> dadosLocacaoes;
+        dadosLocacaoes = LocacaoDAO.getAllComGames(id);
+        Locacoes e = new Locacoes();
+        
+        int z = id;
+      e.getIdLocacao();
+      //  e = dadosLocacaoes.get(id);
+        //idLocacao.setText(Integer.toString(id));
+        //idLocacao.setText(Integer.toString(z);
+
+        valor.setText((String) dadosLocacaoes.getClass().getSuperclass().cast(e));
+        //valor.setText(Integer.toString((int) e.getValor()));
+        telefone.setText(e.getTelefone());
+        dtDevolucao.setText(e.getDtDevolucao());
+        dtLocacao.setText(e.getDtLocacao());
+        nomeCliente.setText(e.getNomeCliente());
+
+    }*/
 
     private void tornarEditavel() throws Exception {
 
@@ -328,9 +339,6 @@ public class CadastroLocacoes extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(gamesLocacao);
         gamesLocacao.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        if (gamesLocacao.getColumnModel().getColumnCount() > 0) {
-            gamesLocacao.getColumnModel().getColumn(1).setResizable(false);
-        }
 
         botaoIncluir.setText("Incluir");
         botaoIncluir.addActionListener(new java.awt.event.ActionListener() {
@@ -381,11 +389,7 @@ public class CadastroLocacoes extends javax.swing.JFrame {
         jScrollPane3.setViewportView(Locacoes1);
         Locacoes1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         if (Locacoes1.getColumnModel().getColumnCount() > 0) {
-            Locacoes1.getColumnModel().getColumn(1).setResizable(false);
-            Locacoes1.getColumnModel().getColumn(2).setHeaderValue("Telefone");
             Locacoes1.getColumnModel().getColumn(3).setResizable(false);
-            Locacoes1.getColumnModel().getColumn(3).setHeaderValue("Data Locação");
-            Locacoes1.getColumnModel().getColumn(4).setHeaderValue("Data Devolução");
         }
 
         setJMenuBar(jMenuBar1);
@@ -403,53 +407,51 @@ public class CadastroLocacoes extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator3)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(botaoSair, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoAlterar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoIncluir))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(idLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(valor, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dtLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(120, 120, 120))
-                            .addComponent(dtDevolucao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(nomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoSelecionar, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(botaoSair, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(botaoExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(botaoAlterar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(botaoSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(botaoIncluir))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(idLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(valor, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(dtLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(120, 120, 120))
+                                    .addComponent(dtDevolucao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(nomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botaoSelecionar, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -460,7 +462,7 @@ public class CadastroLocacoes extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -494,18 +496,18 @@ public class CadastroLocacoes extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(138, 138, 138)
-                        .addComponent(botaoSelecionar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(132, 132, 132)
+                        .addComponent(botaoSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(88, 88, 88)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(164, Short.MAX_VALUE)))
+                    .addContainerGap(181, Short.MAX_VALUE)))
         );
 
         pack();
@@ -570,8 +572,8 @@ public class CadastroLocacoes extends javax.swing.JFrame {
         int pegarCod, j;
         String s = null;
         String xx;
-        Locacoes loc;
-        Game med;
+        //Locacoes loc;
+        /// Game med;
 
         pegarCod = Locacoes1.getSelectedRow();
 
@@ -580,13 +582,38 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
         xx = Integer.toString(j);
 
-             try {
+        try {
+
+            /* for (Locacoes m : LocacaoDAO.getAll()) {
+            modelo.addRow(new Object[]{
+                m.getIdLocacao(),
+                m.getNomeCliente(),
+                m.getTelefone(),
+                m.getValor(),
+                m.getDtLocacao(),
+                m.getDtDevolucao()
+
+            });
+
+        }*/
             exibirGamesPorLocacao(j);
-                 } catch (Exception ex) {
+            idLocacao.setText(Integer.toString(j));
+           
+                  System.out.println("Pegou a locação de ID " + j);
+
+         //   exibirGamesPorLocacao(j);
+
+            /*idLocacao.setText(s);
+            valor.setText(s);
+            telefone.setText(s);
+            dtDevolucao.setText(s);
+            dtLocacao.setText(s);
+            nomeCliente.setText(s);*/
+        } catch (Exception ex) {
             Logger.getLogger(CadastroLocacoes.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        
+
     }//GEN-LAST:event_botaoSelecionarActionPerformed
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
@@ -628,7 +655,7 @@ public class CadastroLocacoes extends javax.swing.JFrame {
             j = (int) gamesLocacao.getValueAt(pegarCod, 0);
 
             xx = Integer.toString(j);
-         //   loc = LocacaoDAO.buscarGamePorIdRecLocacao(xx);
+            //   loc = LocacaoDAO.buscarGamePorIdRecLocacao(xx);
 
             xx = Integer.toString(j);
             loc = LocacaoDAO.buscarLocacoesPorId(xx);
