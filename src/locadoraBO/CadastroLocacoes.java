@@ -5,10 +5,9 @@
  */
 package locadoraBO;
 
-import locadoraMODELO.Game;
-import locadoraMODELO.Locacoes;
-import locadoraMODELO.Genero;
+import locadoraMODELO.*;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import locadoraDAO.*;
 import java.util.logging.Logger;
@@ -28,20 +27,41 @@ public class CadastroLocacoes extends javax.swing.JFrame {
      */
     public CadastroLocacoes() throws Exception {
         initComponents();
-        DefaultTableModel modelo = (DefaultTableModel) Locacoes.getModel();
-        Locacoes.setRowSorter(new TableRowSorter(modelo));
+        /*DefaultTableModel modelo = (DefaultTableModel) gamesLocacao.getModel();
+        gamesLocacao.setRowSorter(new TableRowSorter(modelo));*/
+        DefaultTableModel modelo = (DefaultTableModel) Locacoes1.getModel();
+        Locacoes1.setRowSorter(new TableRowSorter(modelo));
+
         lerAtendimento();
-        //listarGenero();
         listarGamess();
+        // exibirGamesPorLocacao();
 
     }
 
+    /*public void exibirGamesPorLocacao() throws Exception {
+
+        DefaultTableModel modelo = (DefaultTableModel) gamesLocacao.getModel();
+        modelo.setNumRows(0);
+        gamesLocacao.setRowSorter(new TableRowSorter(modelo));
+        
+      //g = 1;
+
+        for (Locacoes l : LocacaoDAO.getAllComGames()){
+            modelo.addRow(new Object[]{
+
+                l.getIdGame()
+              
+    
+            });
+        }
+
+    }*/
     public void lerGenero() throws Exception {
 
-        DefaultTableModel modelo = (DefaultTableModel) Locacoes.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) gamesLocacao.getModel();
         modelo.setNumRows(0);
 
-        Locacoes.setRowSorter(new TableRowSorter(modelo));
+        gamesLocacao.setRowSorter(new TableRowSorter(modelo));
 
         GeneroDAO med = new GeneroDAO() {
         };
@@ -55,11 +75,47 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
     }
 
+    public void exibirGamesPorLocacao(int g) throws Exception {
+
+        DefaultTableModel modelo = (DefaultTableModel) gamesLocacao.getModel();
+        modelo.setNumRows(0);
+        gamesLocacao.setRowSorter(new TableRowSorter(modelo));
+
+        for (Locacoes l : LocacaoDAO.getAllComGames(g)) {
+            modelo.addRow(new Object[]{
+                l.getIdGame(),
+                l.getNomeCliente(),
+                l.getTelefone()
+
+            });
+            
+        }
+
+    }
+
+    public void lerDescricaoDoGenero() throws Exception {
+
+        /* DefaultTableModel modelo = (DefaultTableModel) Locacoes.getModel();
+        modelo.setNumRows(0);
+
+        Locacoes.setRowSorter(new TableRowSorter(modelo));
+
+        GeneroDAO med = new GeneroDAO() {
+        };
+
+        for (Genero m : med.getAll()) {
+            modelo.addRow(new Object[]{
+              //  m.getIdGenero(),
+                m.getDescricao()});
+
+        }*/
+    }
+
     public void lerAtendimento() throws Exception {
 
-        DefaultTableModel modelo = (DefaultTableModel) Locacoes.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) Locacoes1.getModel();
         modelo.setNumRows(0);
-        Locacoes.setRowSorter(new TableRowSorter(modelo));
+        Locacoes1.setRowSorter(new TableRowSorter(modelo));
 
         LocacaoDAO med = new LocacaoDAO() {
         };
@@ -68,11 +124,10 @@ public class CadastroLocacoes extends javax.swing.JFrame {
             modelo.addRow(new Object[]{
                 m.getIdLocacao(),
                 m.getNomeCliente(),
-                m.getIdGame(),
-                m.getDtDevolucao(),
+                m.getTelefone(),
+                ///m.getValor(),
                 m.getDtLocacao(),
-                m.getValor(),
-                m.getTelefone()
+                m.getDtDevolucao()
 
             });
 
@@ -81,20 +136,19 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
     public void limparcampos() {
 
-        genero1.setText("");
+        //genero1.setText("");
         valor.setText("");
         nomeCliente.setText("");
         idLocacao.setText("");
         telefone.setText("");
         dtLocacao.setText("");
         dtDevolucao.setText("");
-        listaGeneros1.setSelectedIndex(0);
-
+   
     }
 
     public void dadosConsultaAtendimento(String atendimento) {
 
-        DefaultTableModel modelo = (DefaultTableModel) Locacoes.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) gamesLocacao.getModel();
         modelo.setNumRows(0);
 
         for (Locacoes atd : LocacaoDAO.buscaLocacoesporId(atendimento)) {
@@ -121,7 +175,7 @@ public class CadastroLocacoes extends javax.swing.JFrame {
         List<Genero> todosGeneros;
         todosGeneros = GeneroDAO.getAll();
         todosGeneros.forEach((s) -> {
-            listaGeneros1.addItem(s.getDescricao());
+            //listaGeneros1.addItem(s.getDescricao());
 
         });
 
@@ -131,11 +185,9 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
         List<Game> todosGames;
         todosGames = GameDAO.getAll();
-        // todosGames = GeneroDAO.getAll();
+      
         todosGames.forEach((s) -> {
-            listaGeneros1.addItem(s.getTitulo());
-
-        });
+            });
 
     }
 
@@ -150,8 +202,7 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
     }
 
-   // public void incluirAtendimento() throws Exception GeneroDAO
-
+    // public void incluirAtendimento() throws Exception GeneroDAO
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -177,17 +228,15 @@ public class CadastroLocacoes extends javax.swing.JFrame {
         botaoAlterar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        Locacoes = new javax.swing.JTable();
-        jSeparator1 = new javax.swing.JSeparator();
+        gamesLocacao = new javax.swing.JTable();
         botaoIncluir = new javax.swing.JButton();
         botaoSelecionar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
-        jLabel11 = new javax.swing.JLabel();
-        genero1 = new javax.swing.JTextField();
-        listaGeneros1 = new javax.swing.JComboBox<>();
         botaoExcluir = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        Locacoes1 = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
 
         jLabel1.setText("Código Locação:");
@@ -253,32 +302,35 @@ public class CadastroLocacoes extends javax.swing.JFrame {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("LOCAÇÕES");
 
-        Locacoes.setAutoCreateRowSorter(true);
-        Locacoes.setModel(new javax.swing.table.DefaultTableModel(
+        gamesLocacao.setAutoCreateRowSorter(true);
+        gamesLocacao.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Cliente", "Game", "Telefone", "Valor", "Data Locação", "Data Devolução"
+                "Cod. Game", "Título", "Gênero"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        Locacoes.setColumnSelectionAllowed(true);
-        Locacoes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        Locacoes.addMouseListener(new java.awt.event.MouseAdapter() {
+        gamesLocacao.setColumnSelectionAllowed(true);
+        gamesLocacao.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        gamesLocacao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                LocacoesMouseClicked(evt);
+                gamesLocacaoMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(Locacoes);
-        Locacoes.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        jScrollPane2.setViewportView(gamesLocacao);
+        gamesLocacao.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        if (gamesLocacao.getColumnModel().getColumnCount() > 0) {
+            gamesLocacao.getColumnModel().getColumn(1).setResizable(false);
+        }
 
         botaoIncluir.setText("Incluir");
         botaoIncluir.addActionListener(new java.awt.event.ActionListener() {
@@ -287,7 +339,7 @@ public class CadastroLocacoes extends javax.swing.JFrame {
             }
         });
 
-        botaoSelecionar.setText("Selecionar");
+        botaoSelecionar.setText("Visualizar Games");
         botaoSelecionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoSelecionarActionPerformed(evt);
@@ -296,21 +348,46 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
         jLabel8.setText("Valor:");
 
-        jLabel11.setText("Gênero:");
-
-        listaGeneros1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar..." }));
-        listaGeneros1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listaGeneros1ActionPerformed(evt);
-            }
-        });
-
         botaoExcluir.setText("Excluir");
         botaoExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoExcluirActionPerformed(evt);
             }
         });
+
+        Locacoes1.setAutoCreateRowSorter(true);
+        Locacoes1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Cliente", "Telefone", "Data Locação", "Data Devolução"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        Locacoes1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Locacoes1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Locacoes1MouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(Locacoes1);
+        Locacoes1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        if (Locacoes1.getColumnModel().getColumnCount() > 0) {
+            Locacoes1.getColumnModel().getColumn(1).setResizable(false);
+            Locacoes1.getColumnModel().getColumn(2).setHeaderValue("Telefone");
+            Locacoes1.getColumnModel().getColumn(3).setResizable(false);
+            Locacoes1.getColumnModel().getColumn(3).setHeaderValue("Data Locação");
+            Locacoes1.getColumnModel().getColumn(4).setHeaderValue("Data Devolução");
+        }
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -318,115 +395,117 @@ public class CadastroLocacoes extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jSeparator2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator3)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(genero1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(listaGeneros1, 0, 1, Short.MAX_VALUE)
-                        .addGap(101, 101, 101)
                         .addComponent(botaoSair, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoAlterar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoIncluir))
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(idLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(valor, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dtLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator3)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(idLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(dtLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(120, 120, 120))
-                                    .addComponent(dtDevolucao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(valor, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(100, 100, 100)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(nomeCliente)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(589, 589, 589)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jSeparator1)
-                                    .addComponent(botaoSelecionar, javax.swing.GroupLayout.Alignment.TRAILING)))
-                            .addComponent(jScrollPane2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jSeparator2)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(120, 120, 120))
+                            .addComponent(dtDevolucao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(nomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botaoSelecionar, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane3)
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botaoSelecionar)
-                .addGap(13, 13, 13)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(dtDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dtLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(idLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(valor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel1))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(idLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(valor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(dtDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dtLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(nomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(nomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoSair)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(botaoSalvar)
-                        .addComponent(botaoAlterar)
-                        .addComponent(botaoIncluir)
-                        .addComponent(botaoExcluir))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(genero1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(listaGeneros1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel11)))
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(botaoSalvar)
+                                .addComponent(botaoAlterar)
+                                .addComponent(botaoIncluir))
+                            .addComponent(botaoSair)
+                            .addComponent(botaoExcluir)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(138, 138, 138)
+                        .addComponent(botaoSelecionar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(88, 88, 88)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(164, Short.MAX_VALUE)))
         );
 
         pack();
@@ -470,14 +549,14 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
     }//GEN-LAST:event_botaoAlterarActionPerformed
 
-    private void LocacoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LocacoesMouseClicked
+    private void gamesLocacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_gamesLocacaoMouseClicked
 
-    }//GEN-LAST:event_LocacoesMouseClicked
+    }//GEN-LAST:event_gamesLocacaoMouseClicked
 
     private void botaoIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoIncluirActionPerformed
         try {
             // TODO add your handling code here:
-            incluirAtendimento();
+            //incluirAtendimento();
             lerAtendimento();
 
         } catch (Exception ex) {
@@ -487,43 +566,27 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
     private void botaoSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSelecionarActionPerformed
 
-        GenerosDAO g = new GenerosDAO();
+        GeneroDAO g = new GeneroDAO();
         int pegarCod, j;
         String s = null;
         String xx;
         Locacoes loc;
         Game med;
 
-        pegarCod = Locacoes.getSelectedRow();
+        pegarCod = Locacoes1.getSelectedRow();
 
-        try {
+        s = Integer.toString(pegarCod);
+        j = (int) Locacoes1.getValueAt(pegarCod, 0);
 
-            s = Integer.toString(pegarCod);
-            j = (int) Locacoes.getValueAt(pegarCod, 0);
+        xx = Integer.toString(j);
 
-            xx = Integer.toString(j);
-            loc = LocacaoDAO.buscarGamePorIdRecLocacao(xx);
-            String bg = GenerosDAO.descricaoGenero(loc.getGame());
-
-            genero1.setText(Integer.toString(loc.getGame()));
-
-            xx = Integer.toString(j);
-            loc = LocacaoDAO.buscarLocacoesPorId(xx);
-
-            valor.setText(Integer.toString(loc.getValor()));
-            nomeCliente.setText(loc.getNomeCliente());
-            idLocacao.setText(Integer.toString(j));
-            telefone.setText(loc.getTelefone());
-            dtLocacao.setText(loc.getDtLocacao());
-            dtDevolucao.setText(loc.getDtDevolucao());
-            listaGeneros1.setSelectedIndex(j);
-            idLocacao.setText(Integer.toString(loc.getIdLocacao()));
-
-            listarGamess();
-
-        } catch (Exception ex) {
-            Logger.getLogger(GameDAO.class.getName()).log(Level.SEVERE, null, ex);
+             try {
+            exibirGamesPorLocacao(j);
+                 } catch (Exception ex) {
+            Logger.getLogger(CadastroLocacoes.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        
     }//GEN-LAST:event_botaoSelecionarActionPerformed
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
@@ -548,10 +611,6 @@ public class CadastroLocacoes extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_valorActionPerformed
 
-    private void listaGeneros1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaGeneros1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_listaGeneros1ActionPerformed
-
     private void botaoExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirActionPerformed
         // TODO add your handling code here:
 
@@ -560,16 +619,16 @@ public class CadastroLocacoes extends javax.swing.JFrame {
         String xx;
         Locacoes loc;
 
-        pegarCod = Locacoes.getSelectedRow();
+        pegarCod = gamesLocacao.getSelectedRow();
 
         try {
             System.out.println("PEGAR COD = " + pegarCod);
 
             s = Integer.toString(pegarCod);
-            j = (int) Locacoes.getValueAt(pegarCod, 0);
+            j = (int) gamesLocacao.getValueAt(pegarCod, 0);
 
             xx = Integer.toString(j);
-            loc = LocacaoDAO.buscarGamePorIdRecLocacao(xx);
+         //   loc = LocacaoDAO.buscarGamePorIdRecLocacao(xx);
 
             xx = Integer.toString(j);
             loc = LocacaoDAO.buscarLocacoesPorId(xx);
@@ -584,6 +643,10 @@ public class CadastroLocacoes extends javax.swing.JFrame {
             Logger.getLogger(GameDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_botaoExcluirActionPerformed
+
+    private void Locacoes1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Locacoes1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Locacoes1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -657,7 +720,7 @@ public class CadastroLocacoes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable Locacoes;
+    private javax.swing.JTable Locacoes1;
     private javax.swing.JButton botaoAlterar;
     private javax.swing.JButton botaoExcluir;
     private javax.swing.JButton botaoIncluir;
@@ -666,10 +729,9 @@ public class CadastroLocacoes extends javax.swing.JFrame {
     private javax.swing.JButton botaoSelecionar;
     private javax.swing.JFormattedTextField dtDevolucao;
     private javax.swing.JFormattedTextField dtLocacao;
-    private javax.swing.JTextField genero1;
+    private javax.swing.JTable gamesLocacao;
     private javax.swing.JTextField idLocacao;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -678,10 +740,9 @@ public class CadastroLocacoes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JComboBox<Object> listaGeneros1;
     private javax.swing.JTextField nomeCliente;
     private javax.swing.JTextField telefone;
     private javax.swing.JTextField valor;

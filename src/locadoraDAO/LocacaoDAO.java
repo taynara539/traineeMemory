@@ -62,7 +62,7 @@ public class LocacaoDAO {
 
         ConexaoComBanco con = new ConexaoComBanco();
         PreparedStatement prepararPara = null;
-        String consulta = "SELECT * FROM locacoes";
+        String consulta = "SELECT * FROM locacoes group by id_locacao";
 
         List<Locacoes> lista = new ArrayList<Locacoes>();
 
@@ -75,15 +75,57 @@ public class LocacaoDAO {
 
                 Locacoes atend = new Locacoes();
 
-                atend.setIdLocacao(resultados.getInt("idLocacao"));
+                atend.setIdLocacao(resultados.getInt("id_locacao"));
                 atend.setNomeCliente(resultados.getString("nome_cliente"));
                 atend.setTelefone(resultados.getString("telefone"));
                 atend.setDtLocacao(resultados.getString("data_locacao"));
                 atend.setDtDevolucao(resultados.getString("data_devolucao"));
-                atend.setValor(resultados.getInt("valor_game"));
-                atend.setIdGame(resultados.getInt("game"));
+                atend.setValor(resultados.getInt("valor_item"));
+                atend.setIdGame(resultados.getInt("id_game"));
 
                 lista.add(atend);
+
+            }
+
+        } catch (SQLException e) {
+
+            JOptionPane.showMessageDialog(null, "Locação não encontrada. \n" + e);
+        } finally {
+            prepararPara.close();
+            con.fecharConexaoComBanco();
+
+        }
+
+        return lista;
+
+    }
+
+    public static List<Locacoes> getAllComGames(int idLocacao) throws SQLException, Exception {
+
+        ConexaoComBanco con = new ConexaoComBanco();
+        PreparedStatement prepararPara = null;
+        List<Locacoes> lista = new ArrayList<Locacoes>();
+        Locacoes pac = new Locacoes();
+
+        try {
+
+            String consulta = "SELECT * FROM locacoes where id_locacao = ?";
+
+            prepararPara = con.conectando().prepareStatement(consulta);
+            prepararPara.setInt(1, idLocacao);
+
+            ResultSet rs = prepararPara.executeQuery();
+            while (rs.next()) {
+
+                pac.setIdGame(rs.getInt("id_game"));
+                pac.setDtDevolucao(rs.getString("data_devolucao"));
+                pac.setDtLocacao(rs.getString("data_locacao"));
+                pac.setNomeCliente(rs.getString("nome_cliente"));
+                pac.setValor(rs.getFloat("valor_item"));
+                pac.setTelefone(rs.getString("telefone"));
+                pac.setId(rs.getInt("id_locacao"));
+
+                lista.add(pac);
 
             }
 
