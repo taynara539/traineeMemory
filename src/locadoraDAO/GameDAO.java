@@ -57,7 +57,40 @@ public class GameDAO {
         return game;
 
     }*/
-    
+    public static int retornaIdGame(String descricao) throws Exception {
+
+        int id = 0;
+
+        ConexaoComBanco con = new ConexaoComBanco();
+        PreparedStatement verCod = null;
+
+        String consulta = ("select g.id_game from game g WHERE g.titulo = ?;");
+
+        try {
+            verCod = con.conectando().prepareStatement(consulta);
+
+            verCod.setString(1, descricao);
+
+            ResultSet rs = verCod.executeQuery();
+            while (rs.next()) {
+
+                id = rs.getInt("id_game");
+
+            }
+
+        } catch (Exception e) {
+
+            System.out.println("Erro ao buscar a ID do Game " + e);
+
+        } finally {
+
+            verCod.close();
+            con.fecharConexaoComBanco();
+        }
+
+        return id;
+    }
+
     public static Game descricaoRecGameParam(Game idGame) throws Exception {
 
         ConexaoComBanco con = new ConexaoComBanco();
@@ -280,7 +313,7 @@ public class GameDAO {
 
         return list;
     }
-    
+
     public static List<Game> mostrarDisponiveis() {
 
         ConexaoComBanco con = new ConexaoComBanco();
@@ -294,7 +327,7 @@ public class GameDAO {
             prepararPara = con.conectando().prepareStatement(consulta);
             ResultSet rs = null;
 
-           // prepararPara.setString(1, '%' + nome + '%');
+            // prepararPara.setString(1, '%' + nome + '%');
             rs = prepararPara.executeQuery();
 
             while (rs.next()) {
