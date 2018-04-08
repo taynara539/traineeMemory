@@ -47,7 +47,7 @@ public class GeneroDAO {
 
         ConexaoComBanco con = new ConexaoComBanco();
         PreparedStatement prepararPara = null;
-        String consulta = "SELECT * FROM genero";
+        String consulta = "SELECT * FROM genero;";
 
         List<Genero> lista = new ArrayList<Genero>();
 
@@ -80,8 +80,8 @@ public class GeneroDAO {
         return lista;
 
     }
-
-    public static String descricaoGenero(int id) throws Exception {
+    
+      public static String descricaoGenero(int id) throws Exception {
 
         String s = null;
 

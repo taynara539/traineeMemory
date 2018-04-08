@@ -280,6 +280,44 @@ public class GameDAO {
 
         return list;
     }
+    
+    public static List<Game> mostrarDisponiveis() {
+
+        ConexaoComBanco con = new ConexaoComBanco();
+
+        String consulta = ("select * from game where situacao like 'DISPONÍVEL';");
+
+        List<Game> list = new ArrayList<Game>();
+
+        try {
+            PreparedStatement prepararPara;
+            prepararPara = con.conectando().prepareStatement(consulta);
+            ResultSet rs = null;
+
+           // prepararPara.setString(1, '%' + nome + '%');
+            rs = prepararPara.executeQuery();
+
+            while (rs.next()) {
+
+                Game pac = new Game();
+
+                pac.setIdGame(rs.getInt("id_game"));
+                pac.setTitulo(rs.getString("titulo"));
+                pac.setSinopse(rs.getString("sinopse"));
+                pac.setQtdeJogador(rs.getInt("qtde_jogador"));
+                pac.setIdGenero(rs.getInt("id_genero"));
+                pac.setSituacao(rs.getString("situacao"));
+
+                list.add(pac);
+
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar game por nome! " + e.getMessage());
+        }
+
+        return list;
+    }
 
     public static int idGame(String id) throws Exception {
         String s = null;

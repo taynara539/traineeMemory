@@ -169,17 +169,18 @@ public class TelaInicial extends javax.swing.JFrame {
     private void locacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_locacoesActionPerformed
         // TODO add your handling code here:
 
-        System.out.println("\nIniciando Locações!");
-
+        System.out.println("\nIniciando Locações!"); 
+        
+      CadastroLocacoes cadastroLocacoes;
         try {
-
-            CadastroLocacoes cadastroLocacoes = new CadastroLocacoes();
+            cadastroLocacoes = new CadastroLocacoes(); 
             cadastroLocacoes.setVisible(true);
-
         } catch (Exception ex) {
-
             Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
         }
+     
+              
+        
 
     }//GEN-LAST:event_locacoesActionPerformed
 
