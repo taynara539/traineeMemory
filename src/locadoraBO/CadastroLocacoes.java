@@ -30,6 +30,7 @@ public class CadastroLocacoes extends javax.swing.JFrame {
         Locacoes1.setRowSorter(new TableRowSorter(modelo));
 
         lerAtendimento();
+        gamesDisponiveis();
         listarGamess();
     }
 
@@ -146,6 +147,25 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
     }
 
+    
+    public void gamesDisponiveis() throws Exception{
+    
+    
+    DefaultTableModel modelo = (DefaultTableModel) gamesLocacao.getModel();
+        modelo.setNumRows(0);
+        gamesLocacao.setRowSorter(new TableRowSorter(modelo));
+
+        for (Test m : testeDAO.gamesDisponiveis()) {
+            modelo.addRow(new Object[]{
+                m.getId_game(),
+                m.getTitulo(),
+                m.getDescricao()
+
+            });
+
+        }
+    
+    }
     private void listarGamess() throws Exception {
 
         List<Game> todosGames;

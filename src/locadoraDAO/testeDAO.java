@@ -59,5 +59,46 @@ public class testeDAO {
         return lista;
 
     }
+    
+    
+    public static List<Test> gamesDisponiveis() throws SQLException, Exception {
+
+        ConexaoComBanco con = new ConexaoComBanco();
+        PreparedStatement prepararPara = null;
+        List<Test> lista = new ArrayList<Test>();
+
+        try {
+
+            String consulta = "SELECT GA.ID_GAME, GA.TITULO, GE.DESCRICAO "
+                    + "FROM GAME GA JOIN GENERO GE ON (GA.ID_GENERO = GE.ID_GENERO)"
+                    + "WHERE GA.SITUACAO LIKE '%DISPONÍVEL%';";
+            prepararPara = con.conectando().prepareStatement(consulta);
+           // prepararPara.setInt(1, idLocacao);
+
+            ResultSet rs = prepararPara.executeQuery();
+            while (rs.next()) {
+
+                Test loc = new Test();
+
+                loc.setId_game(rs.getInt("id_game"));
+                loc.setTitulo(rs.getString("titulo"));
+                loc.setDescricao(rs.getString("descricao"));
+
+                lista.add(loc);
+
+            }
+
+        } catch (SQLException e) {
+
+            JOptionPane.showMessageDialog(null, "Locação não encontrada. \n" + e);
+        } finally {
+            prepararPara.close();
+            con.fecharConexaoComBanco();
+
+        }
+
+        return lista;
+
+    }
 
 }
