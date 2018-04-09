@@ -6,18 +6,11 @@
 package locadoraBO;
 
 import java.sql.SQLException;
+import locadoraDAO.*;
+import locadoraMODELO.*;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import locadoraDAO.*;
-import locadoraMODELO.*;
-import locadoraMODELO.*;
-import java.util.List;
-import java.util.logging.Level;
-import locadoraDAO.*;
-import java.util.logging.Logger;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -37,7 +30,7 @@ public class detalheLocacao extends javax.swing.JFrame {
 
     public void atualizarSituacaoGame(int idGame) throws SQLException {
 
-        GameDAO.updateSituacaoGame(idGame);
+        GameDAO.updateSituacaoLocado(idGame);
 
     }
 

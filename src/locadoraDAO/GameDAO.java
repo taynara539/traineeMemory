@@ -199,12 +199,36 @@ public class GameDAO {
     }
 
     
-    public static void updateSituacaoGame(int game) throws SQLException {
+    public static void updateSituacaoLocado(int game) throws SQLException {
         ConexaoComBanco con = new ConexaoComBanco();
         PreparedStatement preparador = null;
 
         String atualizar = ("UPDATE game "
                 + "SET situacao = 'LOCADO' WHERE id_game = ?");
+
+        try {
+
+            preparador = con.conectando().prepareStatement(atualizar);
+
+            preparador.setInt(1, game);
+            preparador.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Game alterado com sucesso!");
+
+        } catch (Exception e) {
+
+            JOptionPane.showMessageDialog(null, "Erro ao alterar Game " + e);
+
+        }
+
+    }
+    
+    public static void updateSituacaoparaDisponivel(int game) throws SQLException {
+        ConexaoComBanco con = new ConexaoComBanco();
+        PreparedStatement preparador = null;
+
+        String atualizar = ("UPDATE game "
+                + "SET situacao = 'DISPONÍVEL' WHERE id_game = ?");
 
         try {
 

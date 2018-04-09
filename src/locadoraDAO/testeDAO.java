@@ -59,8 +59,7 @@ public class testeDAO {
         return lista;
 
     }
-    
-    
+
     public static List<Test> gamesDisponiveis() throws SQLException, Exception {
 
         ConexaoComBanco con = new ConexaoComBanco();
@@ -73,8 +72,7 @@ public class testeDAO {
                     + "FROM GAME GA JOIN GENERO GE ON (GA.ID_GENERO = GE.ID_GENERO)"
                     + "WHERE GA.SITUACAO LIKE '%DISPONÍVEL%';";
             prepararPara = con.conectando().prepareStatement(consulta);
-           // prepararPara.setInt(1, idLocacao);
-
+  
             ResultSet rs = prepararPara.executeQuery();
             while (rs.next()) {
 
