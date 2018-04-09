@@ -37,7 +37,6 @@ public class detalheLocacao extends javax.swing.JFrame {
     private void listarGamesDisponiveis() throws Exception {
 
         List<Game> game;
-        //todosGeneros = GeneroDAO
         game = GameDAO.mostrarDisponiveis();
         game.forEach((s) -> {
             listaGames.addItem(s.getTitulo());

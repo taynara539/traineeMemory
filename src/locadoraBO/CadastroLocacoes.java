@@ -36,7 +36,7 @@ public class CadastroLocacoes extends javax.swing.JFrame {
         idLocacao.setEditable(false);
         botaoAlterar.setEnabled(false);
         botaoSalvar.setEnabled(false);
-        botaoAddGame.setEnabled(true);
+        botaoAddGame.setEnabled(false);
     }
 
     public void excluirLocacao(int id) throws Exception {
@@ -656,6 +656,8 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
     private void botaoAddGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAddGameActionPerformed
         // TODO add your handling code here:
+
+
     }//GEN-LAST:event_botaoAddGameActionPerformed
 
     /**
