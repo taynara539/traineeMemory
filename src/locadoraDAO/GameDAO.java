@@ -21,42 +21,6 @@ import locadoraMODELO.Game;
  */
 public class GameDAO {
 
-    /*  public static Game teste(Locacoes a) {
-        ConexaoComBanco con = new ConexaoComBanco();
-        PreparedStatement verCod = null;
-
-        int a = idGame.getIdGenero();
-
-        Game game = new Game();
-
-        try {
-
-            String consulta = ("SELECT g.descricao from genero g where g.id_genero = ?;");
-
-            verCod = con.conectando().prepareStatement(consulta);
-            verCod.setInt(1, a);
-
-            ResultSet rs = verCod.executeQuery();
-            while (rs.next()) {
-
-                game.setIdGenero(rs.getInt("descricao"));
-
-            }
-
-        } catch (SQLException e) {
-
-            System.out.println("Erro ao retornar descrição" + e);
-
-        } finally {
-
-            verCod.close();
-            con.fecharConexaoComBanco();
-
-        }
-
-        return game;
-
-    }*/
     public static int retornaIdGame(String descricao) throws Exception {
 
         int id = 0;
@@ -198,7 +162,6 @@ public class GameDAO {
 
     }
 
-    
     public static void updateSituacaoLocado(int game) throws SQLException {
         ConexaoComBanco con = new ConexaoComBanco();
         PreparedStatement preparador = null;
@@ -222,7 +185,7 @@ public class GameDAO {
         }
 
     }
-    
+
     public static void updateSituacaoparaDisponivel(int game) throws SQLException {
         ConexaoComBanco con = new ConexaoComBanco();
         PreparedStatement preparador = null;
@@ -459,7 +422,5 @@ public class GameDAO {
 
         }
     }
-
-   
 
 }

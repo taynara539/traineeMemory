@@ -77,8 +77,6 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="botaoAlterar" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="botaoAddGame" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="botaoSelecionar" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jScrollPane2" pref="0" max="32767" attributes="0"/>
@@ -123,7 +121,6 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="botaoSelecionar" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                          <Component id="botaoAddGame" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="botaoAlterar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="botaoSalvar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="botaoExcluir" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -404,13 +401,5 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="botaoAddGame">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Add.Game"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoAddGameActionPerformed"/>
-      </Events>
-    </Component>
   </SubComponents>
 </Form>

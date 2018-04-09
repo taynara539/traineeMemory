@@ -468,14 +468,26 @@ public class CadastroGames extends javax.swing.JFrame {
 
         int idDoGame = 0;
         String textoDeId;
+        String situacao;
+        String locado = "LOCADO";
+        String disponivel = "DISPONÍVEL";
 
         textoDeId = idGames.getText();
         idDoGame = Integer.parseInt(textoDeId);
 
-        GameDAO.excluirGame(idDoGame);
+        situacao = (String) sit.getSelectedItem();
 
-        lerGame();
-        limpaCampos();
+        if (situacao == locado) {
+
+            JOptionPane.showMessageDialog(null, "Game Locado! Impossível excluir ");
+
+        } else {
+
+            GameDAO.excluirGame(idDoGame);
+            lerGame();
+            limpaCampos();
+
+        }
 
     }
 

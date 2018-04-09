@@ -12,19 +12,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import locadoraMODELO.Test;
+import locadoraMODELO.Gen;
 
 /**
  *
  * @author Taynara Kris
  */
-public class testeDAO {
+public class GenDAO {
 
-    public static List<Test> gameDaLocacaoJoin(int idLocacao) throws SQLException, Exception {
+    public static List<Gen> gameDaLocacaoJoin(int idLocacao) throws SQLException, Exception {
 
         ConexaoComBanco con = new ConexaoComBanco();
         PreparedStatement prepararPara = null;
-        List<Test> lista = new ArrayList<Test>();
+        List<Gen> lista = new ArrayList<Gen>();
 
         try {
 
@@ -37,7 +37,7 @@ public class testeDAO {
             ResultSet rs = prepararPara.executeQuery();
             while (rs.next()) {
 
-                Test loc = new Test();
+                Gen loc = new Gen();
 
                 loc.setId_game(rs.getInt("id_game"));
                 loc.setTitulo(rs.getString("titulo"));
@@ -60,11 +60,11 @@ public class testeDAO {
 
     }
 
-    public static List<Test> gamesDisponiveis() throws SQLException, Exception {
+    public static List<Gen> gamesDisponiveis() throws SQLException, Exception {
 
         ConexaoComBanco con = new ConexaoComBanco();
         PreparedStatement prepararPara = null;
-        List<Test> lista = new ArrayList<Test>();
+        List<Gen> lista = new ArrayList<Gen>();
 
         try {
 
@@ -76,7 +76,7 @@ public class testeDAO {
             ResultSet rs = prepararPara.executeQuery();
             while (rs.next()) {
 
-                Test loc = new Test();
+                Gen loc = new Gen();
 
                 loc.setId_game(rs.getInt("id_game"));
                 loc.setTitulo(rs.getString("titulo"));

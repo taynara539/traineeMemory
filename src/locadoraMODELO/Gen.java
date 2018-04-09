@@ -9,13 +9,13 @@ package locadoraMODELO;
  *
  * @author Taynara Kris
  */
-public class Test {
+public class Gen {
 
     private int id_game = 0;
     private String titulo = "";
     private String descricao = "";
 
-    public Test() {
+    public Gen() {
 
         this.id_game = 0;
         this.titulo = "";

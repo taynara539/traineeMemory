@@ -36,15 +36,14 @@ public class CadastroLocacoes extends javax.swing.JFrame {
         idLocacao.setEditable(false);
         botaoAlterar.setEnabled(false);
         botaoSalvar.setEnabled(false);
-        botaoAddGame.setEnabled(false);
     }
 
     public void excluirLocacao(int id) throws Exception {
 
-        List<Test> teste = new ArrayList<>();
-        teste = testeDAO.gameDaLocacaoJoin(id);
+        List<Gen> teste = new ArrayList<>();
+        teste = GenDAO.gameDaLocacaoJoin(id);
 
-        for (Test t : teste) {
+        for (Gen t : teste) {
             GameDAO.updateSituacaoparaDisponivel(t.getId_game());
         }
 
@@ -78,7 +77,7 @@ public class CadastroLocacoes extends javax.swing.JFrame {
         modelo1.setNumRows(0);
         gamesLocacao.setRowSorter(new TableRowSorter(modelo1));
 
-        for (Test t : testeDAO.gameDaLocacaoJoin(g)) {
+        for (Gen t : GenDAO.gameDaLocacaoJoin(g)) {
             modelo1.addRow(new Object[]{
                 t.getId_game(),
                 t.getTitulo(),
@@ -170,7 +169,7 @@ public class CadastroLocacoes extends javax.swing.JFrame {
         modelo.setNumRows(0);
         gamesLocacao.setRowSorter(new TableRowSorter(modelo));
 
-        for (Test m : testeDAO.gamesDisponiveis()) {
+        for (Gen m : GenDAO.gamesDisponiveis()) {
             modelo.addRow(new Object[]{
                 m.getId_game(),
                 m.getTitulo(),
@@ -237,7 +236,6 @@ public class CadastroLocacoes extends javax.swing.JFrame {
         botaoExcluir = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         Locacoes1 = new javax.swing.JTable();
-        botaoAddGame = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
 
         jLabel1.setText("Código Locação:");
@@ -382,12 +380,6 @@ public class CadastroLocacoes extends javax.swing.JFrame {
             Locacoes1.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        botaoAddGame.setText("Add.Game");
-        botaoAddGame.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoAddGameActionPerformed(evt);
-            }
-        });
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -438,8 +430,6 @@ public class CadastroLocacoes extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(botaoAlterar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(botaoAddGame)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(botaoSelecionar))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addComponent(jSeparator3)
@@ -473,7 +463,6 @@ public class CadastroLocacoes extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(botaoSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botaoAddGame)
                             .addComponent(botaoAlterar)
                             .addComponent(botaoSalvar)
                             .addComponent(botaoExcluir))
@@ -529,7 +518,6 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
             botaoSalvar.setEnabled(true);
             botaoIncluir.setEnabled(false);
-            botaoAddGame.setEnabled(false);
             botaoSelecionar.setEnabled(false);
 
             tornarEditavel();
@@ -568,7 +556,6 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
     private void botaoSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSelecionarActionPerformed
 
-        botaoAddGame.setEnabled(true);
         botaoAlterar.setEnabled(true);
         GeneroDAO g = new GeneroDAO();
         int pegarCod, j;
@@ -625,7 +612,6 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
     private void botaoExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirActionPerformed
         // TODO add your handling code here:
-
         try {
             int pegarCod, j;
             String s = null;
@@ -653,12 +639,6 @@ public class CadastroLocacoes extends javax.swing.JFrame {
     private void Locacoes1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Locacoes1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_Locacoes1MouseClicked
-
-    private void botaoAddGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAddGameActionPerformed
-        // TODO add your handling code here:
-
-
-    }//GEN-LAST:event_botaoAddGameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -733,7 +713,6 @@ public class CadastroLocacoes extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Locacoes1;
-    private javax.swing.JButton botaoAddGame;
     private javax.swing.JButton botaoAlterar;
     private javax.swing.JButton botaoExcluir;
     private javax.swing.JButton botaoIncluir;
