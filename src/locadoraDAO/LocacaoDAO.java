@@ -252,6 +252,38 @@ public class LocacaoDAO {
         }
 
     }
+    
+    
+    public static void alterarDadosAtendimento(Locacoes atend) throws Exception {
+
+        ConexaoComBanco con = new ConexaoComBanco();
+        PreparedStatement preparador = null;
+
+        String atualizar = ("UPDATE locacoes "
+                + "SET nome_cliente = ?, telefone = ?, data_locacao = ?,"
+                + "data_devolucao = ?, valor_item = ?  WHERE id_locacao = ?");
+
+        try {
+            preparador = con.conectando().prepareStatement(atualizar);
+
+            preparador.setString(1, atend.getNomeCliente());
+            preparador.setString(2, atend.getTelefone());
+            preparador.setString(3, atend.getDtLocacao());
+            preparador.setString(4, atend.getDtDevolucao());
+            preparador.setFloat(5, atend.getValor());
+            preparador.setInt(6, atend.getIdLocacao());
+
+            preparador.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Locacao alterada com sucesso!");
+
+        } catch (Exception e) {
+
+            JOptionPane.showMessageDialog(null, "Erro ao alterar Locacao " + e);
+
+        }
+
+    }
 
     public static List<Locacoes> buscaLocacoesporId(String atendimento) {
 
